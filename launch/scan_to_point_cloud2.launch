@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!--rosrun pigeon_converter scan_to_point_cloud2_node-->
+  <node pkg="pigeon_converter" type="scan_to_point_cloud2_node" name="scan_to_point_cloud2_node" respawn="false" output="screen" >
+    <param name="TopicNameScan" type="string" value="scan"/>
+    <param name="TopicNameScanToPointCloud2" type="string" value="scan_to_point_cloud2"/>
+  </node>
+
+</launch>
