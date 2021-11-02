@@ -16,7 +16,6 @@ class ScanToPointCloud2
 public:
     ScanToPointCloud2(ros::NodeHandle &n)
        {
-          // open run
           GetRosParam();
           InitRos(n);
        }
@@ -25,10 +24,10 @@ public:
 
        }
 
-    struct Check
+    struct SequenceCheckBox
     {
-      uint32_t count = 0;
-      uint32_t previous_count = 0;
+      uint32_t seq = 0;
+      uint32_t previous_seq = 0;
       uint32_t check_count = 0;
     };
 
@@ -38,7 +37,7 @@ public:
 
     void ScanCallBack(const sensor_msgs::LaserScan &data);
 
-    bool CheckCallback(Check *check,uint32_t *seq);
+    bool CheckCallbackSequence(SequenceCheckBox *check_box,uint32_t *seq);
 
     sensor_msgs::PointCloud2 _ScanToPointCloud2(sensor_msgs::LaserScan &data);
 
@@ -70,7 +69,7 @@ private:
 
     CallBackDatas callback_datas_;
     InitDatas init_datas_;
-    Check sequence_check_scan_;
+    SequenceCheckBox sequence_check_box_scan_;
     TopicNames topic_names_;
 
     ros::Subscriber subscriber_scan_;

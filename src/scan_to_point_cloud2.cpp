@@ -5,27 +5,26 @@ void ScanToPointCloud2::ScanCallBack(const sensor_msgs::LaserScan &data)
   callback_datas_.scan = data;
 }
 
-bool ScanToPointCloud2::CheckCallback(Check *check, uint32_t *seq)
+bool ScanToPointCloud2::CheckCallbackSequence(SequenceCheckBox *check_box, uint32_t *seq)
 {
-    check->count = *seq;
+    check_box->seq = *seq;
 
-    if(check->count == check->previous_count)
+    if(check_box->seq == check_box->previous_seq)
     {
-        check->check_count++;
+        check_box->check_count++;
 
-        if(check->check_count > 99)
+        if(check_box->check_count > 99)
         {
-            check->check_count = 100;
+            check_box->check_count = 100;
             return false;
         }
-
     }
     else
     {
-        check->check_count= 0;
+        check_box->check_count= 0;
     }
 
-    check->previous_count = check->count;
+    check_box->previous_seq = check_box->seq;
 
     return true;
 }
@@ -80,7 +79,7 @@ void ScanToPointCloud2::Publisher()
 void ScanToPointCloud2::Spin()
 {
   Update();
-  if(CheckCallback(&sequence_check_scan_, &callback_datas_.scan.header.seq) == false)
+  if(CheckCallbackSequence(&sequence_check_box_scan_, &callback_datas_.scan.header.seq) == false)
   {
       callback_datas_.scan = init_datas_.scan;
   }
